@@ -32592,7 +32592,7 @@ attempted value: ${formattedValue}
   // components/contacts.tsx
   var import_react7 = __toESM(require_react());
 
-  // components/map.js
+  // components/ymap.js
   (function ymapsInit(e) {
     var n = this, t = { ns: {}, supports: {}, env: e };
     t.performance = { now: n.performance && n.performance.now ? n.performance.now.bind(n.performance) : function() {

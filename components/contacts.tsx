@@ -1,6 +1,6 @@
 import '../CSS/contacts.css';
 import React, { useEffect } from 'react';
-import './map.js';
+import './ymap.js';
 
 declare namespace ymaps{
     function ready(successCallback: Function | Object): void;

@@ -1,5 +1,5 @@
 node_modules
-/components/map.js
+/components/ymap.js
 /CSS
 .hintrc
 .htaccess
