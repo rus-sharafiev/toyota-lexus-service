@@ -4,8 +4,8 @@
   "description": "Toyota Lexus Service",
   "main": "app.jsx",
   "scripts": {
-    "watch": "esbuild app.jsx --outfile=build/index.js --bundle --watch --external:*.png --external:*.jpg",
-    "build": "esbuild app.jsx --outfile=build/index.js --bundle --minify --external:*.png"
+    "watch": "esbuild app.tsx --outfile=build/index.js --bundle --watch --external:*.png --external:*.jpg",
+    "build": "esbuild app.tsx --outfile=build/index.js --bundle --minify --external:*.png"
   },
   "author": "Rus Sharafiev",
   "license": "ISC",

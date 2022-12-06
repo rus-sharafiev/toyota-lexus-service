@@ -33,9 +33,7 @@ export const Repair = () => {
                 .date(),
         }),
         onSubmit: values => {
-            console.log(JSON.stringify(values, null, 2));
-            formik.resetForm();
-            setSendForm(false);
+            setSendForm(true);
         },
     });
 
@@ -146,7 +144,7 @@ export const Repair = () => {
                         </>
                     ) : formik.values.descr ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('descr', '', false)}>cancel</button> ) : null }
                 </div>
-                <button type="button" onClick={() => setSendForm(true)}>Отправить</button>
+                <button type="submit">Отправить</button>
                 {sendForm && <div className='form-sent'>
                     <div>
                         <span>Проверьте данные и подтвердите заявку</span>
@@ -155,7 +153,12 @@ export const Repair = () => {
                         <span>Номер телефона: </span><span>{formik.values.phone}</span>
                         {formik.values.date && <><span>Желаемая дата: </span><span>{formik.values.date}</span></>}
                         <span>Причина обращения: </span><span>{formik.values.descr}</span>
-                        <button type="submit">Подтвердить</button>
+                        <button type="button" onClick={() => {
+                            console.log(JSON.stringify(formik.values, null, 2));
+                            formik.resetForm();
+                            setSendForm(false);
+                        }}>Подтвердить</button>
+                        <button type="button" onClick={() => setSendForm(false)}>Отменить</button>
                     </div>
                 </div>}
             </form>

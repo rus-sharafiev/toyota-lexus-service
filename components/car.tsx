@@ -11,11 +11,11 @@ const compareTO = (a: any, b : any) => {
 
 export const Car = () => {
     let { carId } = useParams();
-    const [car, setCar] = useState<{[index: string]: any; }>({});
-    const [engine, setEngine] = useState<{[index: string]: any; }>({});
-    const [transmission, setTransmission] = useState<{[index: string]: any; }>({});
-    const [drive, setDrive] = useState<{[index: string]: any; }>({});
-    const [maintenance, setMaintenance] = useState<{[index: string]: any; }>({});
+    const [car, setCar] = useState<{[index: string]: any; }>([]);
+    const [engine, setEngine] = useState<{[index: string]: any; }>([]);
+    const [transmission, setTransmission] = useState<{[index: string]: any; }>([]);
+    const [drive, setDrive] = useState<{[index: string]: any; }>([]);
+    const [maintenance, setMaintenance] = useState<{[index: string]: any; }>([]);
 
     const [activeEng, SetActiveEng] = useState('');
     const [activeTrsm, SetActiveTrsm] = useState('');
@@ -29,17 +29,17 @@ export const Car = () => {
     }, []);
 
     useEffect(() => {
-        setTransmission({});
+        setTransmission([]);
         SetActiveTrsm('');
     }, [engine]);
 
     useEffect(() => {
-        setDrive({});
+        setDrive([]);
         SetActiveDrv('');
     }, [engine, transmission]);
 
     useEffect(() => {
-        setMaintenance({});
+        setMaintenance([]);
         SetActiveMtn('');
     }, [engine, transmission, drive]);
 
@@ -96,9 +96,9 @@ export const Car = () => {
                 )}
             </div>
             <div className='car-maintenance'>
-                {maintenance.length != 0 ? 
+                {Object.entries(maintenance).length != 0 ? 
                 <>  
-                    {Object.values(maintenance).map( (v) => { sum += Math.round(v)} )}
+                    {Object.values(maintenance).map( (v) => { sum += Math.round(v)} ) }
                     <div>
                         <span>Предварительная стоимость обслуживания</span>
                         <table>
@@ -107,7 +107,7 @@ export const Car = () => {
                             </thead>
                             <tbody>
                                 {Object.entries(maintenance).map(([k, v]) =>
-                                    v && <tr key={k}><td>{k}</td><td>{Math.round(v).toLocaleString('ru-RU')} ₽</td></tr>                    
+                                    v && <tr key={k}><td>{k}</td><td>{Math.round(v).toLocaleString('ru-RU')} ₽</td></tr>
                                 )}
                             </tbody>
                         </table>

@@ -53,7 +53,6 @@ const App = () => {
                 <NavButton id='' symbol='Home' name='Главная' />
                 <NavButton id='models' symbol='directions_car' name='Модели' />
                 <NavButton id='repair' symbol='construction' name='Ремонт' />
-                <NavButton id='about' symbol='groups' name='О нас' />
                 <NavButton id='contacts' symbol='location_on' name='Контакты' />
             </nav>
             <Logo mobile={mobile} />

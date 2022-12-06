@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 
 export const Models = () => {
-    const [toyotaModels, setToyotaModels] = useState<{[index: string]: any; }>({});
+    const [toyotaModels, setToyotaModels] = useState<{[index: string]: any; }>([]);
 
     useEffect(() => {
         fetch(`models.php`)
@@ -17,7 +17,7 @@ export const Models = () => {
                 <span>Модели <span className='arimo'>TOYOTA</span></span>
                 <div className='cars-container'>
                     { toyotaModels.length != 0 
-                        ? toyotaModels.map((car: {[index: string]: any; }) => 
+                        ? toyotaModels.map((car: any) => 
                             <div key={car.model} className='model-card '>
                                 <img src={car.img} alt={car.model}/>
                                 <span className='arimo'>TOYOTA</span>

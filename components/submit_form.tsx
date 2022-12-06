@@ -24,9 +24,7 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                 .date(),
         }),
         onSubmit: values => {
-            console.log(JSON.stringify(values, null, 2));
-            formik.resetForm();
-            setSendForm(false);
+            setSendForm(true);
         },
     });
 
@@ -87,7 +85,7 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                     </>
                 ) : null }
             </div>
-            <button type="button" onClick={() => setSendForm(true)}>Отправить</button>                
+            <button type="submit">Отправить</button>              
             {sendForm && <div className='form-sent'>
                 <div>
                     <span>Проверьте данные и подтвердите заявку</span>
@@ -96,7 +94,12 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                     <span>Автомобиль: </span><span>{formik.values.car}</span>
                     <span>Обслуживание: </span><span>{formik.values.maintenance}</span>
                     {formik.values.date && <><span>Желаемая дата: </span><span>{formik.values.date}</span></>}
-                    <button type="submit">Подтвердить</button>
+                    <button type="button" onClick={() => {
+                        console.log(JSON.stringify(formik.values, null, 2));
+                        formik.resetForm();
+                        setSendForm(false);
+                    }}>Подтвердить</button>
+                    <button type="button" onClick={() => setSendForm(false)}>Отменить</button>
                 </div>
             </div>}
         </form>
