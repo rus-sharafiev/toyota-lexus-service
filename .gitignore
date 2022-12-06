@@ -1,5 +1,5 @@
 node_modules
-/maps.js
+/components/map.js
 /CSS
 .hintrc
 .htaccess
