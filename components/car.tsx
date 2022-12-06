@@ -1,5 +1,5 @@
 import '../CSS/car.css';
-import '../CSS/m3form.css';
+import '../CSS/form.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SendRequestForm } from './submit_form';

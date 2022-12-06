@@ -47,8 +47,17 @@ export const Start = () => {
                     Выберите свой автомобиль
                 </div>
                 <div className='start-cars-text'>
-                    что-бы узнать стоймость обслуживания<br />
-                    и оставить заявку
+                    что-бы узнать стоймость технического<br />
+                    обслуживания и оставить заявку
+                </div>
+            </Link>            
+            <Link to={'/repair'} className='start-repair-container'>
+                <div className='start-repair'>
+                    Заполните заявку
+                </div>
+                <div className='start-repair-text'>
+                    если нужно провести ремонт<br />
+                    или замену запасных частей
                 </div>
             </Link>
             <div className='start-footer-container'>

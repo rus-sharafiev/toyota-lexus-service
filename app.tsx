@@ -1,5 +1,4 @@
 import './CSS/main.css';
-import './CSS/mobile.css';
 import './CSS/styles.css';
 
 import React, { useState, useEffect } from 'react';

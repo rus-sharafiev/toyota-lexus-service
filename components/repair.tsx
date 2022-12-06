@@ -1,5 +1,5 @@
 import '../CSS/repair.css';
-import '../CSS/m3form.css';
+import '../CSS/form.css';
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -144,7 +144,7 @@ export const Repair = () => {
                         </>
                     ) : formik.values.descr ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('descr', '', false)}>cancel</button> ) : null }
                 </div>
-                <button type="submit">Отправить</button>
+                <button type="submit" className='filled'>Отправить</button>
                 {sendForm && <div className='form-sent'>
                     <div>
                         <span>Проверьте данные и подтвердите заявку</span>
@@ -153,12 +153,14 @@ export const Repair = () => {
                         <span>Номер телефона: </span><span>{formik.values.phone}</span>
                         {formik.values.date && <><span>Желаемая дата: </span><span>{formik.values.date}</span></>}
                         <span>Причина обращения: </span><span>{formik.values.descr}</span>
-                        <button type="button" onClick={() => {
+                        <button type="button" className='filled button-submit'
+                            onClick={() => {
                             console.log(JSON.stringify(formik.values, null, 2));
                             formik.resetForm();
                             setSendForm(false);
-                        }}>Подтвердить</button>
-                        <button type="button" onClick={() => setSendForm(false)}>Отменить</button>
+                            }
+                        }>Подтвердить</button>
+                        <button type="button" className='outlined button-cancel' onClick={() => setSendForm(false)}>Отменить</button>
                     </div>
                 </div>}
             </form>

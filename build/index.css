@@ -67,7 +67,7 @@ nav {
   background: var(--md-sys-color-surface-light);
   transition: background-color 0.1s ease-in-out;
   display: grid;
-  grid: 56px 56px / 80px;
+  grid: 56px 56px 56px 56px / 80px;
   gap: 12px;
   align-content: center;
   -webkit-touch-callout: none;
@@ -133,36 +133,22 @@ nav > a.nav-active > span:hover {
     "wght" 500,
     "opsz" 24;
 }
-header {
-  opacity: 0;
-  position: fixed;
-  left: 80px;
-  width: 100%;
-  height: 50px;
-  padding: 10px;
-  display: grid;
-  grid: 50px / 1fr;
-  align-items: center;
-  gap: 20px;
-  background: var(--md-sys-color-surface-light);
-  color: white;
-}
 .title {
   color: white;
 }
-
-/* CSS/mobile.css */
 @media only screen and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 2) {
   @supports (-webkit-backdrop-filter: saturate(150%) blur(3px)) or (backdrop-filter: saturate(150%) blur(3px)) {
+    header,
     nav {
       -webkit-backdrop-filter: saturate(150%) blur(3px);
       backdrop-filter: saturate(150%) blur(3px);
-      background: linear-gradient(to bottom, rgba(var(--md-sys-color-primary--rgb), 0.05), rgba(var(--md-sys-color-primary--rgb), 0.05)), rgba(var(--md-sys-color-surface--rgb), 0.6);
+      background: rgba(var(--md-sys-color-surface-light--rgb), 0.8);
     }
   }
   @supports not ((-webkit-backdrop-filter: saturate(150%) blur(3px)) or (backdrop-filter: saturate(150%) blur(3px))) {
+    header,
     nav {
-      background: linear-gradient(to bottom, rgba(var(--md-sys-color-primary--rgb), 0.05), rgba(var(--md-sys-color-primary--rgb), 0.05)), var(--md-sys-color-background);
+      background: var(--md-sys-color-background-light);
     }
   }
   root {
@@ -170,6 +156,30 @@ header {
     grid: 1fr / 1fr;
   }
   main {
+    padding: 50px 0;
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+  }
+  header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    z-index: 1;
+  }
+  .logo {
+    width: 250px;
+    z-index: 1;
+  }
+  nav {
+    position: fixed;
+    width: 100%;
+    height: 60px;
+    bottom: 0;
+    display: grid;
+    grid: 60px / 56px 56px 56px 56px;
+    justify-content: space-evenly;
+    z-index: 1;
   }
 }
 
@@ -258,11 +268,8 @@ header {
 }
 
 /* CSS/start.css */
-main.start + header {
-  opacity: 0;
-  padding: 0;
-}
-main.start + header + nav + svg > path:first-child {
+main.start + header + nav + svg > path:first-child,
+main.start + header + nav + svg > g {
   fill: white;
 }
 main.start + header + nav {
@@ -287,7 +294,7 @@ main.start + header + nav > a.nav-active > span:hover {
 }
 .start {
   display: grid;
-  grid: 600px 600px 700px 400px 140px / 1fr;
+  grid: 600px 600px 700px 400px 400px 140px / 1fr;
   background: black;
 }
 .start-title-container {
@@ -311,10 +318,9 @@ main.start + header + nav > a.nav-active > span:hover {
   background-size: auto 100%;
   gap: 80px;
 }
+.start-repair-container,
 .start-cars-container {
-  grid-row: 4 / 5;
   background-repeat: no-repeat;
-  background-image: url(/IMG/start_chose_car.png), linear-gradient(black, black);
   background-size: cover;
   padding: 60px;
   display: flex;
@@ -326,6 +332,15 @@ main.start + header + nav > a.nav-active > span:hover {
   border-top: 1px solid #1a1a1a;
   transition: filter 0.1s ease-in-out;
 }
+.start-cars-container {
+  grid-row: 4 / 5;
+  background-image: url(/IMG/start_chose_car.png), linear-gradient(black, black);
+}
+.start-repair-container {
+  grid-row: 5 / 6;
+  background-image: url(/IMG/start_repair.png), linear-gradient(black, black);
+}
+.start-repair-container:hover,
 .start-cars-container:hover {
   filter: grayscale(0);
 }
@@ -344,21 +359,23 @@ main.start + header + nav > a.nav-active > span:hover {
 .start-title,
 .start-about,
 .start-work,
-.start-cars {
+.start-cars,
+.start-repair {
   font-size: 57px;
   line-height: 64px;
-  font-weight: 400;
+  font-weight: 500;
 }
 .start-title-text,
 .start-about-text,
 .start-work-text,
-.start-cars-text {
+.start-cars-text,
+.start-repair-text {
   font-size: 36px;
   line-height: 44px;
   font-weight: 400;
 }
 .start-footer-container {
-  grid-row: 5 / 6;
+  grid-row: 6 / 7;
   background: black;
   display: flex;
   align-items: center;
@@ -407,6 +424,85 @@ main.start + header + nav > a.nav-active > span:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 0 20px;
+}
+@media only screen and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 2) {
+  @supports (-webkit-backdrop-filter: saturate(150%) blur(3px)) or (backdrop-filter: saturate(150%) blur(3px)) {
+    main.start + header,
+    main.start + header + nav {
+      -webkit-backdrop-filter: saturate(150%) blur(3px);
+      backdrop-filter: saturate(150%) blur(3px);
+      background: rgba(var(--md-sys-color-surface-dark--rgb), 0.95);
+    }
+  }
+  @supports not ((-webkit-backdrop-filter: saturate(150%) blur(3px)) or (backdrop-filter: saturate(150%) blur(3px))) {
+    main.start + header,
+    main.start + header + nav {
+      background: var(--md-sys-color-surface-dark);
+    }
+  }
+  .start {
+    display: grid;
+    grid: repeat(6, min-content) / 1fr;
+    background: black;
+  }
+  .start-title-container,
+  .start-about-container,
+  .start-work-container,
+  .start-repair-container,
+  .start-cars-container {
+    padding: 80px 20px;
+    gap: 20px;
+  }
+  .start-title-container {
+    background-size: auto 60vh;
+  }
+  .start-about-container,
+  .start-work-container {
+    background-size: auto 100vh;
+  }
+  .start-title,
+  .start-about,
+  .start-work,
+  .start-cars,
+  .start-repair {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 500;
+  }
+  .start-title-text,
+  .start-about-text,
+  .start-work-text,
+  .start-cars-text,
+  .start-repair-text {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 400;
+  }
+  .start-footer-container {
+    flex-direction: column;
+    padding: 20px 10px;
+    gap: 20px;
+  }
+  .start-footer-container > div:first-child > img {
+    height: 50px;
+  }
+  .start-footer-container > div:first-child > div,
+  .start-footer-container > div:first-child > div > span {
+    font-size: 14px;
+    line-height: 20px;
+    margin-left: 0;
+  }
+  .start-footer-container > div:last-child {
+    font-size: 12px;
+    line-height: 16px;
+  }
+  .start-footer-container > div:last-child {
+    font-size: 10px;
+    line-height: 12px;
+    gap: 0 10px;
+    width: 100%;
+    justify-content: space-around;
+  }
 }
 
 /* CSS/models.css */
@@ -524,6 +620,14 @@ main.start + header + nav > a.nav-active > span:hover {
 }
 .gen-card:hover > img {
   filter: grayscale(0);
+}
+@media only screen and (max-device-width: 736px) and (-webkit-min-device-pixel-ratio: 2) {
+  .models {
+    padding: 50px 10px;
+  }
+  .toyota-cars > span {
+    text-align: center;
+  }
 }
 
 /* CSS/car.css */
@@ -676,7 +780,7 @@ form.maintenance > span {
   color: var(--md-sys-color-on-surface-light);
 }
 
-/* CSS/m3form.css */
+/* CSS/form.css */
 @supports (-webkit-backdrop-filter: saturate(150%) blur(3px)) or (backdrop-filter: saturate(150%) blur(3px)) {
   .form-sent {
     -webkit-backdrop-filter: saturate(150%) blur(3px);
@@ -685,7 +789,7 @@ form.maintenance > span {
 }
 form {
   border-radius: 12px;
-  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.01), rgba(var(--md-sys-color-primary-light--rgb), 0.01)), var(--md-sys-color-surface-light);
+  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.05), rgba(var(--md-sys-color-primary-light--rgb), 0.05)), var(--md-sys-color-surface-light);
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.15), 0px 1px 3px 1px rgba(0, 0, 0, 0.1);
 }
 form > div {
@@ -697,15 +801,15 @@ form > div > textarea,
 form > div > input {
   width: 100%;
   height: 56px;
-  padding: 16px 52px 16px 16px;
+  padding: 16px 42px 16px 16px;
   border: 1px solid var(--md-sys-color-outline-light);
   border-radius: 4px;
-  background: var(--md-sys-color-surface-light);
   outline: none;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.01), rgba(var(--md-sys-color-primary-light--rgb), 0.01)), var(--md-sys-color-surface-light);
+  color: var(--md-sys-color-on-surface-light);
+  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.05), rgba(var(--md-sys-color-primary-light--rgb), 0.05)), var(--md-sys-color-surface-light);
   transition: all 0.1s ease-in-out;
 }
 form > div > textarea {
@@ -721,21 +825,12 @@ form > div > input:hover {
 form > div > textarea:focus,
 form > div > input:focus {
   border: 2px solid var(--md-sys-color-primary-light);
-  padding: 15px 51px 15px 15px;
+  padding: 15px 41px 15px 15px;
 }
 form > div > textarea.error,
 form > div > input.error {
   border: 2px solid var(--md-sys-color-error-light);
-  padding: 15px 51px 15px 15px;
-}
-form > div > label {
-  position: absolute;
-  left: 16px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: var(--md-sys-color-on-surface-variant-light);
-  transition: all 0.1s linear;
+  padding: 15px 41px 15px 15px;
 }
 form > div > label {
   position: absolute;
@@ -746,13 +841,16 @@ form > div > label {
   line-height: 24px;
   color: var(--md-sys-color-on-surface-variant-light);
   transition: all 0.1s linear;
+  display: flex;
+  align-items: center;
+  cursor: text;
 }
 form > div > textarea:not(:placeholder-shown) + label,
 form > div > textarea:focus + label,
 form > div > input:not(:placeholder-shown) + label,
 form > div > input:focus + label,
+form > div > .supporting-text,
 form > div > .error-label {
-  position: absolute;
   font-size: 12px;
   font-weight: 400;
   line-height: 16px;
@@ -760,18 +858,34 @@ form > div > .error-label {
   transition: all 0.1s linear;
 }
 form > div > textarea:not(:placeholder-shown) + label,
-form > div > textarea:focus + label,
 form > div > input:not(:placeholder-shown) + label,
+form > div > textarea:focus + label,
 form > div > input:focus + label {
   left: 12px;
-  top: -8px;
+  top: 0;
+  height: 1px;
   padding: 0 4px;
-  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.01), rgba(var(--md-sys-color-primary-light--rgb), 0.01)), var(--md-sys-color-surface-light);
+  background: linear-gradient(0, rgba(var(--md-sys-color-primary-light--rgb), 0.05), rgba(var(--md-sys-color-primary-light--rgb), 0.05)), var(--md-sys-color-surface-light);
+}
+form > div > textarea:focus + label,
+form > div > input:focus + label,
+form > div > textarea:focus:hover + label,
+form > div > input:focus:hover + label {
+  top: -1px;
+  height: 3px;
   color: var(--md-sys-color-primary-light);
 }
+form > div > textarea:hover + label,
+form > div > input:hover + label {
+  color: var(--md-sys-color-on-surface-light);
+}
+form > div > .supporting-text,
 form > div > .error-label {
+  position: absolute;
   left: 16px;
   bottom: -20px;
+}
+form > div > .error-label {
   color: var(--md-sys-color-error-light);
 }
 form > div > .error-icon {
@@ -801,11 +915,11 @@ form.maintenance > button {
   grid-row: 3 / 4;
   align-self: end;
 }
-.form-sent > div > button,
-form > button {
-  width: min-content;
+button {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: min-content;
   padding: 0 24px;
   height: 40px;
   border: none;
@@ -813,14 +927,30 @@ form > button {
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
-  background: var(--md-sys-color-primary-light);
-  color: var(--md-sys-color-on-primary-light);
   cursor: pointer;
   transition: all 0.1s ease-in-out;
 }
-.form-sent > div > button:hover,
-form > button:hover {
+button.filled {
+  background: var(--md-sys-color-primary-light);
+  color: var(--md-sys-color-on-primary-light);
+}
+button.filled:hover {
   box-shadow: 0px 1px 2px rgb(0 0 0 / 10%), 0px 2px 6px 2px rgb(0 0 0 / 10%);
+}
+button.outlined {
+  border: 1px solid var(--md-sys-color-outline-light);
+  background: none;
+  color: var(--md-sys-color-primary-light);
+}
+button.outlined:hover {
+  background: rgba(var(--md-sys-color-primary-light--rgb), 0.05);
+}
+button.outlined:disabled,
+button.outlined:disabled:hover {
+  background: none;
+  border: 1px solid rgba(var(--md-sys-color-on-surface-light--rgb), 0.13);
+  color: rgba(var(--md-sys-color-on-surface-light--rgb), 0.38);
+  cursor: default;
 }
 .form-sent {
   position: fixed;
@@ -852,9 +982,14 @@ form > button:hover {
   line-height: 40px;
   margin-bottom: 16px;
 }
-.form-sent > div > button {
-  grid-column: 1 / -1;
+.form-sent > div > .button-submit {
+  grid-column: 1 / 2;
   margin-top: 16px;
+}
+.form-sent > div > .button-cancel {
+  grid-column: 2 / -1;
+  margin-top: 16px;
+  justify-self: end;
 }
 .form-sent > div > span:nth-child(even) {
   justify-self: end;
@@ -865,6 +1000,16 @@ form > button:hover {
 .form-sent > div > span:nth-child(odd) {
   max-height: 350px;
   overflow: auto;
+}
+input[type=color],
+input[type=color]:focus,
+input[type=color]::-webkit-color-swatch-wrapper {
+  padding: 4px;
+  overflow: hidden;
+  cursor: pointer;
+}
+input[type=color]::-webkit-color-swatch {
+  border: none;
 }
 
 /* CSS/contacts.css */
@@ -916,7 +1061,7 @@ main.repair {
   grid-column: 1 / -1;
   min-height: 100vh;
   display: grid;
-  grid: 30px min-content / 80px 1fr 3fr 1fr;
+  grid: 0 min-content / 80px 1fr 3fr 1fr;
 }
 form.repair {
   grid-column: 3 / 4;
