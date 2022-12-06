@@ -1,0 +1,23 @@
+{
+  "name": "tlservice-kazan",
+  "version": "1.0.0",
+  "description": "Toyota Lexus Service",
+  "main": "app.jsx",
+  "scripts": {
+    "watch": "esbuild app.jsx --outfile=build/index.js --bundle --watch --external:*.png --external:*.jpg",
+    "build": "esbuild app.jsx --outfile=build/index.js --bundle --minify --external:*.png"
+  },
+  "author": "Rus Sharafiev",
+  "license": "ISC",
+  "dependencies": {
+    "@types/react-dom": "^18.0.9",
+    "esbuild": "^0.15.13",
+    "formik": "^2.2.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.4.3",
+    "typescript": "^4.9.3",
+    "workbox-cli": "^6.5.4",
+    "yup": "^0.32.11"
+  }
+}
