@@ -1,5 +1,6 @@
 node_modules
 /components/ymap.js
+/build/index.js
 /CSS
 .hintrc
 .htaccess
