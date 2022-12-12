@@ -1,9 +1,8 @@
-import '../CSS/car.css';
 import '../CSS/form.css';
+import '../CSS/car.css';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SendRequestForm } from './submit_form';
-import { object } from 'yup';
 
 const compareTO = (a: any, b : any) => {
     return a[0].split(',')[0] - b[0].split(',')[0];
@@ -18,7 +17,7 @@ export const Car = () => {
     const [maintenance, setMaintenance] = useState<{[index: string]: any; }>([]);
 
     const [activeEng, SetActiveEng] = useState('');
-    const [activeTrsm, SetActiveTrsm] = useState('');
+    const [activeTransmission, setActiveTransmission] = useState('');
     const [activeDrv, SetActiveDrv] = useState('');
     const [activeMtn, SetActiveMtn] = useState('');
 
@@ -30,7 +29,7 @@ export const Car = () => {
 
     useEffect(() => {
         setTransmission([]);
-        SetActiveTrsm('');
+        setActiveTransmission('');
     }, [engine]);
 
     useEffect(() => {
@@ -68,8 +67,8 @@ export const Car = () => {
                 : Object.entries(engine).map(([key, value]) => 
                     <div
                         key={key}
-                        onClick={() => {value && setTransmission(value); SetActiveTrsm(key)}}
-                        className={activeTrsm == key ? 'active' : undefined}
+                        onClick={() => {value && setTransmission(value); setActiveTransmission(key)}}
+                        className={activeTransmission == key ? 'active' : undefined}
                     >{key}</div>
                 )}
             </div>
@@ -113,15 +112,21 @@ export const Car = () => {
                         </table>
                         
                         <div>Сумма <span>{sum.toLocaleString('ru-RU')} ₽</span></div>
-                        <span>Также на каждом обслуживании выполняются:
+                        <span>На техническом обслуживании выполняются следующие проверки:
                             <ul>
-                                <li>Проверка уровня тормозной и охлаждающей жидкостей</li>
-                                <li>Состояние и целостность шлангов и патрубков</li>
-                                <li>Общее состояние подвески и ступичных подшипников</li>
+                                <li>Световые приборы, сигналы, стеклоочистители и омыватели</li>
+                                <li>Фильтр кондиционера</li>
+                                <li>Технические жидкости, ремни, патрубки подкапотном пространстве</li>
+                                <li>Воздушный фильтр</li>
+                                <li>АКБ</li>
+                                <li>Передняя и задняя подвески</li>
+                                <li>Шины и давление в шинах</li>
+                                <li>Тормозные колодки и тормозные диски</li>
+                                <li>Рулевое управление и ходовая часть</li>
                             </ul>
                         </span>
                     </div>
-                    <SendRequestForm car={`${car.model} ${activeEng} ${activeTrsm} ${activeDrv}`} maintenance={`ТО - ${activeMtn}`}/>
+                    <SendRequestForm car={`${car.model} ${activeEng} ${activeTransmission} ${activeDrv}`} maintenance={`ТО - ${activeMtn}`}/>
                 </>
                 : null}
             </div>

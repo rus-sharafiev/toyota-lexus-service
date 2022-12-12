@@ -11,6 +11,7 @@ import { Models } from './components/models';
 import { Car } from './components/car';
 import { Contacts } from './components/contacts';
 import { Repair } from './components/repair';
+import { Requests } from './components/requests';
 
 import {Workbox} from 'workbox-window';
 // if ('serviceWorker' in navigator) {
@@ -46,6 +47,7 @@ const App = () => {
                 <Route path="/models/:carId" element={ <Car /> }/>
                 <Route path="/repair" element={ <Repair /> }/>
                 <Route path="/contacts" element={ <Contacts /> }/>
+                <Route path="/requests" element={ <Requests /> }/>
             </Routes>
             <header></header>
             <nav>

@@ -1,26 +1,27 @@
-import '../CSS/repair.css';
 import '../CSS/form.css';
-import React, { useState } from 'react';
+import '../CSS/repair.css';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export const Repair = () => {
-    const[sendForm, setSendForm] = useState(false);
-    const[formHasBeenSent, setFormHasBeenSent] = useState(false);
+    const [sendForm, setSendForm] = useState(false);
+    const [snackbar, setSnackbar] = useState<{[index: string]: any; }>([]);
+    const [snackbarHeight, setSnackbarHeight] = useState(0);
     const formik = useFormik({
         initialValues: {
             name: '',
             phone: '',
-            date: '',
-            vin: '',
-            descr: ''
+            mileage: '',
+            car: '',
+            maintenance: ''
         },
         validationSchema: Yup.object({
-            vin: Yup.string()
+            car: Yup.string()
                 .matches(/^[a-zA-Z0-9_.-]+$/, 'Только латинсике буквы и цифры')
                 .length(17, 'VIN должен содержать 17 символов')
                 .required('Необходимо указать VIN'),
-            descr: Yup.string()
+            maintenance: Yup.string()
                 .required('Опишите неисправность'),
             name: Yup.string()
                 .max(20, 'Не более 20 символов')
@@ -29,13 +30,45 @@ export const Repair = () => {
             phone: Yup.string()
                 .length(10, 'Номер телефона без +7, только 10 цифр')
                 .required('Необходимо указать номер телефона'),
-            date: Yup
-                .date(),
+            mileage: Yup.number()
+                .required('Укажите хотя бы примерный пробег')
         }),
         onSubmit: values => {
             setSendForm(true);
         },
     });
+    
+    const sendRequest = (data: any) => {
+        fetch('/record_request.php', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setSnackbar(data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    }
+    useEffect(() => {
+        if (snackbar.status) {
+            setTimeout(() => {
+                setSnackbarHeight(48);
+            }, 10);
+        }
+    }, [snackbar]);
+
+    useEffect(() => {
+        if (snackbarHeight == 48) {
+            setTimeout(() => {
+                setSnackbarHeight(0);
+                setTimeout(() => {
+                    setSnackbar([]);
+                }, 200);
+            }, 3000);
+        }
+    }, [snackbarHeight]);
 
     return (
         <main className='repair'>
@@ -44,8 +77,8 @@ export const Repair = () => {
                 <div>
                     Для уточнения трудоемкости и метода ремонта, а также для проценки стоимости запасных частей, 
                     необходимо заполнить заявку на ремонт. В заявке необходимо обязательно указать VIN автомобиля. 
-                    С его помошью можно будет предварительно составить список работ и запасных частей, что, в свою очередь, 
-                    позволит подсчитать приблизительную стоймость ремонта.<br /><br />
+                    С его помощью можно будет предварительно составить список работ и запасных частей, что, в свою очередь, 
+                    позволит подсчитать приблизительную стоимость ремонта.<br /><br />
 
                     Мы не работаем с результатами диагностики сторонних сервисных центров, так как зачастую эти заключения 
                     приводят к ремонту, в котором необходимость отсутствует. Поэтому, просим максимально подробно заполнить поле 
@@ -53,25 +86,25 @@ export const Repair = () => {
 
                     Если неисправность отсутствует, а нужно заменить расходники или технические жидкости, просто 
                     укажите это в причине обращения и обязательно отметьте нужны ли будут материалы 
-                    (например "Хочу заменить тормозную жидкость. Не заменил на прошлом обслуживаниии. Расходники ваши")
+                    (например "Хочу заменить тормозную жидкость. Не заменил на прошлом обслуживании. Расходники ваши")
                 </div>
                 <div>
-                    <input className={formik.touched.vin && formik.errors.vin ? 'error' : undefined}
-                        id="vin"
-                        name="vin"
+                    <input className={formik.touched.car && formik.errors.car ? 'error' : undefined}
+                        id="car"
+                        name="car"
                         type="text"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.vin}
+                        value={formik.values.car}
                         placeholder={' '}
                     />
-                    <label htmlFor="vin">VIN</label>
-                    {formik.touched.vin && formik.errors.vin ? (
+                    <label htmlFor="car">VIN</label>
+                    {formik.touched.car && formik.errors.car ? (
                         <>
-                            <div className='error-label'>{formik.errors.vin}</div>
+                            <div className='error-label'>{formik.errors.car}</div>
                             <div className='material-symbols-rounded error-icon'>error</div>
                         </>
-                    ) : formik.values.vin ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('vin', '', false)}>cancel</button> ) : null }
+                    ) : formik.values.car ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('car', '', false)}>cancel</button> ) : null }
                 </div>
                 <div>
                     <input className={formik.touched.name && formik.errors.name ? 'error' : undefined}
@@ -110,52 +143,52 @@ export const Repair = () => {
                     ) : formik.values.phone ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('phone', '', false)}>cancel</button> ) : null }
                 </div>
                 <div>
-                    <input className={formik.touched.date && formik.errors.date ? 'error' : undefined}
-                        id="date"
-                        name="date"
-                        type="date"
+                    <input className={formik.touched.mileage && formik.errors.mileage ? 'error' : undefined}
+                        id="mileage"
+                        name="mileage"
+                        type="number"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.date}
+                        value={formik.values.mileage}
                         placeholder={' '}
                     />
-                    <label htmlFor="date">Желаемая дата</label>
-                    {formik.touched.date && formik.errors.date ? (
+                    <label htmlFor="mileage">Пробег</label>
+                    {formik.touched.mileage && formik.errors.mileage ? (
                         <>
-                            <div className='error-label'>{formik.errors.date}</div>
+                            <div className='error-label'>{formik.errors.mileage}</div>
                             <div className='material-symbols-rounded error-icon'>error</div>
                         </>
-                    ) : null }
+                    ) : formik.values.mileage ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('mileage', '', false)}>cancel</button> ) : null }
                 </div>
                 <div>
-                    <textarea className={formik.touched.descr && formik.errors.descr ? 'error' : undefined}
-                        id="descr"
-                        name="descr"
+                    <textarea className={formik.touched.maintenance && formik.errors.maintenance ? 'error' : undefined}
+                        id="maintenance"
+                        name="maintenance"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.descr}
+                        value={formik.values.maintenance}
                         placeholder={' '}
                     />
-                    <label htmlFor="descr">Причина обращения / Описание неисправности</label>
-                    {formik.touched.descr && formik.errors.descr ? (
+                    <label htmlFor="maintenance">Причина обращения / Описание неисправности</label>
+                    {formik.touched.maintenance && formik.errors.maintenance ? (
                         <>
-                            <div className='error-label'>{formik.errors.descr}</div>
+                            <div className='error-label'>{formik.errors.maintenance}</div>
                             <div className='material-symbols-rounded error-icon'>error</div>
                         </>
-                    ) : formik.values.descr ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('descr', '', false)}>cancel</button> ) : null }
+                    ) : formik.values.maintenance ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('maintenance', '', false)}>cancel</button> ) : null }
                 </div>
                 <button type="submit" className='filled'>Отправить</button>
                 {sendForm && <div className='form-sent'>
                     <div>
                         <span>Проверьте данные и подтвердите заявку</span>
-                        <span>VIN: </span><span>{formik.values.vin}</span>
+                        <span>VIN: </span><span>{formik.values.car}</span>
                         <span>Имя: </span><span>{formik.values.name}</span>
                         <span>Номер телефона: </span><span>{formik.values.phone}</span>
-                        {formik.values.date && <><span>Желаемая дата: </span><span>{formik.values.date}</span></>}
-                        <span>Причина обращения: </span><span>{formik.values.descr}</span>
+                        <span>Пробег: </span><span>{formik.values.mileage}</span>
+                        <span>Причина обращения: </span><span>{formik.values.maintenance}</span>
                         <button type="button" className='filled button-submit'
                             onClick={() => {
-                            console.log(JSON.stringify(formik.values, null, 2));
+                            sendRequest(formik.values);
                             formik.resetForm();
                             setSendForm(false);
                             }
@@ -163,6 +196,11 @@ export const Repair = () => {
                         <button type="button" className='outlined button-cancel' onClick={() => setSendForm(false)}>Отменить</button>
                     </div>
                 </div>}
+                {snackbar.status
+                    ? snackbar.status != 'error'
+                        ? <div className='snackbar' style={{height: snackbarHeight + 'px'}}><div>Заявка №{snackbar.data.id} отправлена</div></div>
+                        : <div className='snackbar' style={{height: snackbarHeight + 'px'}}><div>Произошла ошибка, попробуйте позже</div></div>
+                    : null}
             </form>
         </main>
     );

@@ -27,6 +27,8 @@ if ($stmt = $mysqli -> prepare( $query )) {
         $cabin_filter,
         $brake_fluid,
         $brake_fluid_qtt,
+        $coolant,
+        $coolant_qtt,
         $transmisson_oil,
         $transmisson_oil_qtt,
         $diff_fluid,

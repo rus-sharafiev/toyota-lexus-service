@@ -14,7 +14,7 @@ export const Contacts = () => {
         ymaps.ready(init);
         function init() {
             var myMap = new ymaps.Map("map", {
-                center: [55.813399, 49.291979],
+                center: [55.808326, 49.289182],
                 controls: [],
                 zoom: 14
             }, { suppressMapOpenBlock: true });
@@ -31,10 +31,10 @@ export const Contacts = () => {
             });
             myMap.geoObjects.add(myGeoObject);
             myMap.controls.add('zoomControl', {
-                size: 'small',
+                size: 'large',
                 float: 'none',
                 position: {
-                    bottom: '50px',
+                    top: '80px',
                     right: '30px'
                 }
             });

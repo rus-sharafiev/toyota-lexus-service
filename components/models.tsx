@@ -15,10 +15,10 @@ export const Models = () => {
         <main className='models'>
             <div className='toyota-cars'>
                 <span>Модели <span className='arimo'>TOYOTA</span></span>
-                <div className='cars-container' onClick={() => console.log('click')}>
+                <div className='cars-container'>
                     { toyotaModels.length != 0 
                         ? toyotaModels.map((car: any) => 
-                            <div key={car.model} className='model-card ' onTouchStart={(e) => e.currentTarget.blur() }>
+                            <div key={car.model} className='model-card '>
                                 <img src={car.img} alt={car.model}/>
                                 <span className='arimo'>TOYOTA</span>
                                 <span className='arimo'>{car.model}</span>

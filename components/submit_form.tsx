@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
 export const SendRequestForm = (props: {car: string; maintenance: string}) => {
     const[sendForm, setSendForm] = useState(false);
+    const [snackbar, setSnackbar] = useState<{[index: string]: any; }>([]);
+    const [snackbarHeight, setSnackbarHeight] = useState(0);
     const formik = useFormik({
         initialValues: {
             name: '',
             phone: '',
-            date: '',
+            mileage: '',
             car: props.car,
             maintenance: props.maintenance
         },
@@ -20,13 +22,44 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
             phone: Yup.string()
                 .length(10, 'Номер телефона без +7, только 10 цифр')
                 .required('Необходимо указать номер телефона'),
-            date: Yup
-                .date(),
+            mileage: Yup.number()
+                .required('Укажите хотя бы примерный пробег')
         }),
         onSubmit: values => {
             setSendForm(true);
         },
     });
+    const sRequest = (data: any) => {
+        fetch('/record_request.php', {
+            method: 'POST',
+            body: JSON.stringify(data)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setSnackbar(data);
+        })
+        .catch((error) => {
+            console.error('Err:', error);
+      });
+    }
+    useEffect(() => {
+        if (snackbar.status) {
+            setTimeout(() => {
+                setSnackbarHeight(48);
+            }, 10);
+        }
+    }, [snackbar]);
+
+    useEffect(() => {
+        if (snackbarHeight == 48) {
+            setTimeout(() => {
+                setSnackbarHeight(0);
+                setTimeout(() => {
+                    setSnackbar([]);
+                }, 200);
+            }, 3000);
+        }
+    }, [snackbarHeight]);
 
     return (
         <form onSubmit={formik.handleSubmit} className={'maintenance'}>
@@ -68,22 +101,22 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                 ) : formik.values.phone ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('phone', '', false)}>cancel</button> ) : null }
             </div>
             <div>
-                <input className={formik.touched.date && formik.errors.date ? 'error' : undefined}
-                    id="date"
-                    name="date"
-                    type="date"
+                <input className={formik.touched.mileage && formik.errors.mileage ? 'error' : undefined}
+                    id="mileage"
+                    name="mileage"
+                    type="number"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.date}
+                    value={formik.values.mileage}
                     placeholder={' '}
                 />
-                <label htmlFor="date">Желаемая дата</label>
-                {formik.touched.date && formik.errors.date ? (
+                <label htmlFor="mileage">Пробег</label>
+                {formik.touched.mileage && formik.errors.mileage ? (
                     <>
-                        <div className='error-label'>{formik.errors.date}</div>
+                        <div className='error-label'>{formik.errors.mileage}</div>
                         <div className='material-symbols-rounded error-icon'>error</div>
                     </>
-                ) : null }
+                ) : formik.values.mileage ? ( <button className='material-symbols-rounded' onClick={() => formik.setFieldValue('mileage', '', false)}>cancel</button> ) : null }
             </div>
             <button type="submit" className='filled'>Отправить</button>              
             {sendForm && <div className='form-sent'>
@@ -93,10 +126,10 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                     <span>Номер телефона: </span><span>{formik.values.phone}</span>
                     <span>Автомобиль: </span><span>{formik.values.car}</span>
                     <span>Обслуживание: </span><span>{formik.values.maintenance}</span>
-                    {formik.values.date && <><span>Желаемая дата: </span><span>{formik.values.date}</span></>}
+                    <span>Пробег: </span><span>{formik.values.mileage}</span>
                     <button type="button" className='filled button-submit'
                         onClick={() => {
-                        console.log(JSON.stringify(formik.values, null, 2));
+                        sRequest(formik.values);
                         formik.resetForm();
                         setSendForm(false);
                         }
@@ -104,6 +137,11 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
                     <button type="button" className='outlined button-cancel' onClick={() => setSendForm(false)}>Отменить</button>
                 </div>
             </div>}
+            {snackbar.status
+                ? snackbar.status != 'error'
+                    ? <div className='snackbar' style={{height: snackbarHeight + 'px'}}><div>Заявка №{snackbar.data.id} отправлена</div></div>
+                    : <div className='snackbar' style={{height: snackbarHeight + 'px'}}><div>Произошла ошибка, попробуйте позже</div></div>
+                : null}
         </form>
     );
 };

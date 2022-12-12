@@ -40,6 +40,8 @@ if ($stmt = $mysqli -> prepare( $query )) {
         $cabin_filter,
         $brake_fluid,
         $brake_fluid_qtt,
+        $coolant,
+        $coolant_qtt,
         $transmisson_oil,
         $transmisson_oil_qtt,
         $diff_fluid,
@@ -79,7 +81,8 @@ while ($stmt -> fetch()) {
         'Свечи зажигания' => (array_search($spark_plug, $ids) == NULL) ? '' : $prices[array_search($spark_plug, $ids)] * str_replace(',', '.', $spark_plug_qtt),
         'Кольцо РКПП' => (array_search($transfer_case_ring, $ids) == NULL) ? '' : $prices[array_search($transfer_case_ring, $ids)] * str_replace(',', '.', $transfer_case_ring_qtt),
         'Кольцо дифференциала 1 тип' => (array_search($diff_ring_1, $ids) == NULL) ? '' : $prices[array_search($diff_ring_1, $ids)] * str_replace(',', '.', $diff_ring_1_qtt),
-        'Кольцо дифференциала 2 тип' => (array_search($diff_ring_2, $ids) == NULL) ? '' : $prices[array_search($diff_ring_2, $ids)] * str_replace(',', '.', $diff_ring_2_qtt)
+        'Кольцо дифференциала 2 тип' => (array_search($diff_ring_2, $ids) == NULL) ? '' : $prices[array_search($diff_ring_2, $ids)] * str_replace(',', '.', $diff_ring_2_qtt),
+        'Охлаждающая жидкость' => (array_search($coolant, $ids) == NULL) ? '' : $prices[array_search($coolant, $ids)] * str_replace(',', '.', $coolant_qtt)
     ];
     $result = [
         'brand' => $brand,
