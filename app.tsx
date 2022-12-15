@@ -1,3 +1,9 @@
+declare global {
+    interface Navigator {
+        windowControlsOverlay: any;
+    }
+}
+
 import './CSS/main.css';
 import './CSS/styles.css';
 
@@ -14,10 +20,10 @@ import { Repair } from './components/repair';
 import { Requests } from './components/requests';
 
 import {Workbox} from 'workbox-window';
-// if ('serviceWorker' in navigator) {
-//     const wb = new Workbox('/sw.js');
-//     wb.register();
-// }
+if ('serviceWorker' in navigator) {
+    const wb = new Workbox('/sw.js');
+    wb.register();
+}
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     var mobile = true;
@@ -39,6 +45,16 @@ const NavButton = (props: { id: string; symbol: string; name: string}) => {
 }
 
 const App = () => {
+
+    const [windowCtlOvrlVisible, setWindowCtlOvrlVisible] = useState(!mobile ? navigator.windowControlsOverlay.visible : false);
+    if (!mobile && ('windowControlsOverlay' in navigator)) {
+        navigator.windowControlsOverlay.addEventListener('geometrychange', (event: any) => {
+            if (event.visible) {
+                setWindowCtlOvrlVisible(true)
+            } else {setWindowCtlOvrlVisible(false)}
+        });
+    }
+
     return ( 
         <>
             <Routes>
@@ -57,6 +73,7 @@ const App = () => {
                 <NavButton id='contacts' symbol='location_on' name='Контакты' />
             </nav>
             <Logo mobile={mobile} />
+            {windowCtlOvrlVisible && <div id='pseudo-title-bar'><span className='arimo'>TOYOTA LEXUS </span> Сервис Казань</div>}
         </>
     );
 }

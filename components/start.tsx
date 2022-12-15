@@ -33,13 +33,13 @@ export const Start = () => {
                     Мы выполняем:
                 </div>
                 <ul className='start-work-text'>
-                    <li>Регламентное техническое обслуживание</li>
                     <li>Компьютерную диагностику</li>
+                    <li>Регламентное техническое обслуживание</li> 
+                    <li>Мелко срочный ремонт узлов и элементов подвески,<br />
+                        выхлопной системы, системы охлаждения и т.п.</li>
                     <li>Агрегатный ремонт бензиновых и дизельных двигателей,<br />
                         механических и автоматических коробок переключения передач</li>
-                    <li>Мелко срочный ремонт узлов и элементов подвески,<br />
-                        выхлопной системы, системы охлаждения и т.п.
-                    </li>
+                    <li>Подборка и продажа запасных частей</li> 
                 </ul>
             </div>
             <Link to={'/models'} className='start-cars-container'>
@@ -50,7 +50,7 @@ export const Start = () => {
                     чтобы узнать стоимость технического<br />
                     обслуживания и оставить заявку
                 </div>
-            </Link>            
+            </Link>
             <Link to={'/repair'} className='start-repair-container'>
                 <div className='start-repair'>
                     Заполните заявку
@@ -69,6 +69,7 @@ export const Start = () => {
                             Дизайн и разработка&nbsp;
                             <a href='https://github.com/rus-sharafiev' target="_blank" rel="noopener noreferrer">rus-sharafiev</a>
                         </span>
+                        <Link to={'/requests'}>панель администратора</Link>
                     </div>
                 </div>
                 <div>

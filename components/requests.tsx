@@ -92,9 +92,10 @@ const InfoPage = (props: {logout: (user: string) => void}) => {
     const [snackbar, setSnackbar] = useState<{[index: string]: any; }>([]);
     const [snackbarHeight, setSnackbarHeight] = useState(0);
     const [reload, setReload] = useState<number>();
+    const [search, setSearch] = useState<string>('');
 
     useEffect(() => {    
-        fetch('/requests.php')
+        fetch(`/requests.php?s=${search}`)
         .then((response) => response.json())
         .then((data) => {
             setData(data);
@@ -102,7 +103,7 @@ const InfoPage = (props: {logout: (user: string) => void}) => {
         .catch((error) => {
             console.error('Error:', error);
         });
-    }, [reload]);
+    }, [search, reload]);
 
     const logOut = () => {
         fetch('/requests.php?logout=true')
@@ -115,10 +116,10 @@ const InfoPage = (props: {logout: (user: string) => void}) => {
         });
     }
 
-    const setStatus = (id: number, newStatus: string, comments: string) => {
+    const setStatus = (id: number, newStatus: string, comments: string, date: string) => {
         fetch('/set_status.php', {
             method: 'POST',
-            body: JSON.stringify({id: id, status: newStatus, comments: comments})
+            body: JSON.stringify({id: id, status: newStatus, comments: comments, date: date})
         })
         .then((response) => response.json())
         .then((data) => {
@@ -162,27 +163,40 @@ const InfoPage = (props: {logout: (user: string) => void}) => {
     return(
         <>
             <main className='requests'>
-                <div>Заявки
+                <div>
+                    Заявки
+                    <input defaultValue={search} onChange={(e) => setSearch(e.target.value)} placeholder='поиск'></input>
                     <button type='button' className='outlined' onClick={() => logOut()}>Выйти</button>
                 </div>
                 <div className='requests-container'>
                 {data.requests && Object.entries(data.requests).map(([k, request]) =>
-                    <div key={k} className={'request ' + request.status} >
+                    <div key={request.id} className={'request ' + request.status} >
                         <div>Заявка {request.id} от {request.timestamp}</div>
                         <div className='status'>
+                            <label htmlFor={'status' + request.id}>Статус заявки</label>
                             <select id={'status' + request.id} defaultValue={request.status}>
                                 <option value="new">Новая</option>
                                 <option value="confirmed">Подтверждена</option>
+                                <option value="work">В работе</option>
+                                <option value="done">Выполнена</option>
                                 <option value="delete">На удалении</option>
                             </select>
-                            <input type='button' className='material-symbols-rounded' value='save' 
-                                onClick={() => setStatus(request.id, (document.getElementById('status' + request.id) as HTMLSelectElement).value, (document.getElementById('text' + request.id) as HTMLTextAreaElement).value)} 
+                            <input type='button' className='material-symbols-rounded save-btn' value='save' 
+                                onClick={() => setStatus(
+                                    request.id, 
+                                    (document.getElementById('status' + request.id) as HTMLSelectElement).value,
+                                    (document.getElementById('text' + request.id) as HTMLTextAreaElement).value,
+                                    (document.getElementById('date' + request.id) as HTMLInputElement).value)
+                                } 
                             />
-                            <label>Статус заявки</label>
+                        </div>
+                        <div className='repair-date'>
+                            <label htmlFor={'date' + request.id}>Дата ремонта</label>
+                            <input id={'date' + request.id} type='datetime-local' defaultValue={request.date} />
                         </div>
                         <div className='commments'>
+                            <label htmlFor={'text' + request.id}>Комментарии</label>
                             <textarea id={'text' + request.id} defaultValue={request.comments}></textarea>
-                            <label>Комментарии</label>
                         </div>
                         <div>{request.client} +7{request.phone}</div>
                         <div><span>Авто</span> {request.car}</div>

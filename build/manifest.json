@@ -1,14 +1,14 @@
 {
-    "name": "KODI Home Media Library",
-    "short_name": "KODI Library",
+    "name": "Toyota Lexus Сервис",
+    "short_name": "TL Сервис",
     "start_url": "/",
     "display_override": ["window-controls-overlay"],
     "display": "standalone",
-    "description": "Домашняя библиотека фильмов и сериалов медиацентра KODI",
+    "description": "Техническое и сервисное обслуживание Toyota и Lexus",
     "lang": "Ru",
     "dir": "auto",
-    "theme_color": "#eef4f7",
-    "background_color": "#eef4f7",
+    "theme_color": "#c00017",
+    "background_color": "#c00017",
     "orientation": "any",
     "icons": [
         {
@@ -63,43 +63,20 @@
             "type": "image/png",
             "purpose": "maskable"
         }
-      ],
-    "screenshots": [
-        {
-            "src": "/IMG/ICONS/screenshot.png",
-            "sizes": "1482x995",
-            "type": "image/png",
-            "description": "A screenshot of the home page"
-        }
     ],
     "prefer_related_applications": false,
     "shortcuts": [
         {
-            "name": "Сериалы",
-            "url": "/tvs",
-            "description": "Сериалы в библиотеке",
+            "name": "Заявки",
+            "url": "/requests",
+            "description": "Панель администратора",
             "icons": [
                 { 
-                    "src": "/IMG/ICONS/logo-yellow-192.png", 
+                    "src": "/IMG/ICONS/logo-bg-192.png", 
                     "sizes": "192x192" 
                 },
                 { 
-                    "src": "/IMG/ICONS/logo-yellow-92.png", 
-                    "sizes": "92x92" 
-                }
-            ]
-        },
-        {
-            "name": "Фильмы",
-            "url": "/movies",
-            "description": "Фильмы в библиотеке",
-            "icons": [
-                { 
-                    "src": "/IMG/ICONS/logo-green-192.png", 
-                    "sizes": "192x192" 
-                },
-                { 
-                    "src": "/IMG/ICONS/logo-green-92.png", 
+                    "src": "/IMG/ICONS/logo-bg-92.png", 
                     "sizes": "92x92" 
                 }
             ]

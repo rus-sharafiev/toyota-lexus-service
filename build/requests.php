@@ -27,7 +27,15 @@ if (!$mysqli -> set_charset("utf8")) {
     exit();
 }
 
-$query = "SELECT * FROM requests ORDER BY time DESC";
+$search = $_GET['s'] ?? NULL;
+
+$query = "  SELECT * FROM requests WHERE
+            client_name LIKE '%$search%' OR 
+            phone LIKE '%$search%' OR 
+            car LIKE '%$search%'
+            ORDER BY time DESC
+        ";
+
 
 if ($stmt = $mysqli -> prepare( $query )) {
     $stmt -> execute();
@@ -40,6 +48,7 @@ if ($stmt = $mysqli -> prepare( $query )) {
         $mileage,
         $maintenance,
         $status,
+        $date,
         $comments
     );
 }
@@ -55,6 +64,7 @@ while ($stmt -> fetch()) {
         'mileage' => $mileage,
         'maintenance' => $maintenance,
         'status' => $status,
+        'date' => $date,
         'comments' => $comments
     ];
 }
