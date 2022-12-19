@@ -1,12 +1,12 @@
 # Сайт для автосервиса Toyota Lexus
 
 ### PWA (Windows и Android)
-![Первая страница](https://github.com/rus-sharafiev/toyota-lexus-service/blob/master/screenshots/screenshot.png?raw=true)
+![Первая страница](https://github.com/rus-sharafiev/toyota-lexus-service/blob/master/screenshots/screenshot1.png?raw=true)
 
-![Страница с моделями](https://github.com/rus-sharafiev/toyota-lexus-service/blob/master/screenshots/screenshot-mobile.png?raw=true)
+![Страница с моделями](https://github.com/rus-sharafiev/toyota-lexus-service/blob/master/screenshots/screenshot2.png?raw=true)
 
 ## Frontend
-### Стек технологий
+Стек технологий:  
 - HTML5
 - CSS3
 - JS
@@ -16,7 +16,7 @@
 - TypeScript
 
 ## Backend
-### Стек технологий
+Стек технологий:  
 - PHP8
 - MySQL
 
