@@ -1,19 +1,8 @@
 <?php session_start();
 header("Content-Type: application/json; charset=UTF-8");
 
-if (($_GET['logout'] ?? FALSE) == TRUE) {
-    unset($_SESSION['user']);
-    exit(json_encode(['user' => 'no'], JSON_UNESCAPED_UNICODE));
-}
-
 if (empty($_SESSION['user'])) {
-    $json = file_get_contents('php://input') ?? NULL;
-    if ($json == NULL) {
-        exit(json_encode(['user' => 'no'], JSON_UNESCAPED_UNICODE));
-    }
-    $request = json_decode($json, true);
-    $_SESSION['user']['login'] = $request['login'];
-    $_SESSION['user']['pass'] = $request['pass'];
+    exit(json_encode(['user' => 'no'], JSON_UNESCAPED_UNICODE));
 }
 
 try {

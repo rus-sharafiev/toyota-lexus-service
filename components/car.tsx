@@ -22,7 +22,7 @@ export const Car = () => {
     const [activeMtn, SetActiveMtn] = useState('');
 
     useEffect(() => {
-        fetch(`/car.php?id=${carId}`)
+        fetch(`/api/cars/?id=${carId}`)
             .then((response) => response.json())
             .then((array) => setCar(array));
     }, []);

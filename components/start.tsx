@@ -69,7 +69,7 @@ export const Start = () => {
                             Дизайн и разработка&nbsp;
                             <a href='https://github.com/rus-sharafiev' target="_blank" rel="noopener noreferrer">rus-sharafiev</a>
                         </span>
-                        <Link to={'/requests'}>панель администратора</Link>
+                        <Link to={'/admin'}>панель администратора</Link>
                     </div>
                 </div>
                 <div>

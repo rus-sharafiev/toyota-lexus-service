@@ -6,7 +6,7 @@ export const Models = () => {
     const [toyotaModels, setToyotaModels] = useState<{[index: string]: any; }>([]);
 
     useEffect(() => {
-        fetch(`models.php`)
+        fetch('/api/cars/')
             .then((response) => response.json())
             .then((array) => setToyotaModels(array));
     }, []);
@@ -23,7 +23,7 @@ export const Models = () => {
                                 <span className='arimo'>TOYOTA</span>
                                 <span className='arimo'>{car.model}</span>
                                 <div className='gens-container'>
-                                    { car.gen.map(gen => 
+                                    { car.gen.map((gen: {[index: string]: any}) => 
                                         <Link to={gen.id} key={gen.number} className='gen-card'>
                                             <img src={gen.img} alt={gen.number}/>
                                             <span className='arimo'>{gen.number}</span>

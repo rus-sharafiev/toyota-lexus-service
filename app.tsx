@@ -17,13 +17,13 @@ import { Models } from './components/models';
 import { Car } from './components/car';
 import { Contacts } from './components/contacts';
 import { Repair } from './components/repair';
-import { Requests } from './components/requests';
+import { Admin } from './components/admin';
 
 import {Workbox} from 'workbox-window';
-if ('serviceWorker' in navigator) {
-    const wb = new Workbox('/sw.js');
-    wb.register();
-}
+// if ('serviceWorker' in navigator) {
+//     const wb = new Workbox('/sw.js');
+//     wb.register();
+// }
 
 if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     var mobile = true;
@@ -59,16 +59,16 @@ const App = () => {
         <>
             <Routes>
                 <Route path="/" element={ <Start /> }/>
-                <Route path="/models" element={ <Models /> } />
-                <Route path="/models/:carId" element={ <Car /> }/>
+                <Route path="/cars" element={ <Models /> } />
+                <Route path="/cars/:carId" element={ <Car /> }/>
                 <Route path="/repair" element={ <Repair /> }/>
                 <Route path="/contacts" element={ <Contacts /> }/>
-                <Route path="/requests" element={ <Requests /> }/>
+                <Route path="/admin" element={ <Admin /> }/>
             </Routes>
             <header></header>
             <nav>
                 <NavButton id='' symbol='Home' name='Главная' />
-                <NavButton id='models' symbol='directions_car' name='Модели' />
+                <NavButton id='cars' symbol='directions_car' name='Модели' />
                 <NavButton id='repair' symbol='construction' name='Ремонт' />
                 <NavButton id='contacts' symbol='location_on' name='Контакты' />
             </nav>

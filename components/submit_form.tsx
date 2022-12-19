@@ -30,7 +30,7 @@ export const SendRequestForm = (props: {car: string; maintenance: string}) => {
         },
     });
     const sRequest = (data: any) => {
-        fetch('/record_request.php', {
+        fetch('/api/requests/add/', {
             method: 'POST',
             body: JSON.stringify(data)
         })
