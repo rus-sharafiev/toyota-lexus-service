@@ -262,11 +262,23 @@ const AdminPage = (props: {logout: (user: string) => void}) => {
                         <div className='price-value' >Цена</div>
                         <div></div>
                     </div>   
-                    {prices.prices && Object.entries(prices.prices).map(([k, price]) =>
+                    {prices.prices && Object.values(prices.prices).map((price) =>
                         <div key={price.id} className='price'>
                             <input className='price-id' value={price.id} readOnly={true} />
-                            <input className='price-name' id={'name' + price.id} defaultValue={price.name} />
-                            <input className='price-value' id={'price' + price.id} defaultValue={price.price} />
+                            <input className='price-name' id={'name' + price.id} defaultValue={price.name} 
+                                onFocus={(e) => e.target.parentElement?.classList.add('selected', 'visible')}
+                                onBlur={(e) => {
+                                    e.target.parentElement?.classList.remove('selected');
+                                    setTimeout(() => { e.target.parentElement?.classList.remove('visible')}, 200);
+                                }}
+                            />
+                            <input className='price-value' id={'price' + price.id} defaultValue={price.price} 
+                                onFocus={(e) => e.target.parentElement?.classList.add('selected', 'visible')}
+                                onBlur={(e) => {
+                                    e.target.parentElement?.classList.remove('selected');
+                                    setTimeout(() => { e.target.parentElement?.classList.remove('visible')}, 200);
+                                }}
+                            />
                             <input type='button' className='material-symbols-rounded save-btn' value='save' 
                                 onClick={() => setPrice(
                                     price.id, 

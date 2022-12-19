@@ -46,8 +46,9 @@ const NavButton = (props: { id: string; symbol: string; name: string}) => {
 
 const App = () => {
 
-    const [windowCtlOvrlVisible, setWindowCtlOvrlVisible] = useState(!mobile ? navigator.windowControlsOverlay.visible : false);
+    const [windowCtlOvrlVisible, setWindowCtlOvrlVisible] = useState(false);
     if (!mobile && ('windowControlsOverlay' in navigator)) {
+        setWindowCtlOvrlVisible(true);
         navigator.windowControlsOverlay.addEventListener('geometrychange', (event: any) => {
             if (event.visible) {
                 setWindowCtlOvrlVisible(true)

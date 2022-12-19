@@ -67,8 +67,8 @@
     "prefer_related_applications": false,
     "shortcuts": [
         {
-            "name": "Заявки",
-            "url": "/requests",
+            "name": "Администрирование",
+            "url": "/admin",
             "description": "Панель администратора",
             "icons": [
                 { 
